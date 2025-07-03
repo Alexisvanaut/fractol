@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_data.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alvanaut < alvanaut@student.s19.be >       +#+  +:+       +#+        */
+/*   By: alvanaut <alvanaut@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 13:11:09 by alvanaut          #+#    #+#             */
-/*   Updated: 2025/06/28 13:11:24 by alvanaut         ###   ########.fr       */
+/*   Updated: 2025/07/03 13:40:49 by alvanaut         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,18 +37,24 @@ static void	init_view(t_data *data)
 	data->max_iter = 50;
 }
 
-static void	init_julia_params(t_data *data, char **argv)
+static int	init_julia_params(t_data *data, char **argv)
 {
-	if (ft_strcmp2(argv[1], "julia") == 0 && argv[2] && argv[3])
+	if (ft_strcmp2(argv[1], "julia") == 0)
 	{
-		data->c.re = atof(argv[2]);
-		data->c.im = atof(argv[3]);
+		if (argv[2] && argv[3])
+		{
+			if (!is_valid_float(argv[2]) || !is_valid_float(argv[3]))
+				return (1);
+			data->c.re = ft_atof(argv[2]);
+			data->c.im = ft_atof(argv[3]);
+		}
+		else
+		{
+			data->c.re = -0.7;
+			data->c.im = 0.27015;
+		}
 	}
-	else
-	{
-		data->c.re = -0.7;
-		data->c.im = 0.27015;
-	}
+	return (0);
 }
 
 int	init_data(t_data *data, char **argv)
@@ -57,6 +63,7 @@ int	init_data(t_data *data, char **argv)
 		return (1);
 	data->fractal_name = argv[1];
 	init_view(data);
-	init_julia_params(data, argv);
+	if (init_julia_params(data, argv))
+		return (1);
 	return (0);
 }

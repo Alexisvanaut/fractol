@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fractol.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alvanaut < alvanaut@student.s19.be >       +#+  +:+       +#+        */
+/*   By: alvanaut <alvanaut@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 16:04:49 by alvanaut          #+#    #+#             */
-/*   Updated: 2025/06/28 13:19:27 by alvanaut         ###   ########.fr       */
+/*   Updated: 2025/07/03 13:40:24 by alvanaut         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,5 +57,7 @@ int				key_hook(int keycode, t_data *data);
 int				mouse_hook(int button, int x, int y, t_data *data);
 int				get_color(int iter, int max_iter);
 void			draw_alexis(t_data *data);
+double			ft_atof(const char *str);
+int				is_valid_float(const char *str);
 
 #endif

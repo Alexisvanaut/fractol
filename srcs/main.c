@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alvanaut < alvanaut@student.s19.be >       +#+  +:+       +#+        */
+/*   By: alvanaut <alvanaut@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 14:43:13 by alvanaut          #+#    #+#             */
-/*   Updated: 2025/06/28 13:20:52 by alvanaut         ###   ########.fr       */
+/*   Updated: 2025/07/03 13:48:16 by alvanaut         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,22 +43,47 @@ static void	draw_fractal(t_data *data)
 	}
 }
 
+static void	print_usage(void)
+{
+	ft_printf("Usage:\n");
+	ft_printf("  ./fractol mandelbrot\n");
+	ft_printf("  ./fractol julia [real] [imaginary]\n");
+	ft_printf("  ./fractol alexis\n");
+	ft_printf("\nExamples:\n");
+	ft_printf("  ./fractol julia -0.7 0.27015\n");
+	ft_printf("  ./fractol julia -0.8 0.156\n");
+	ft_printf("  ./fractol julia 0.285 0.01\n");
+}
+
+static int	validate_args(int argc, char **argv)
+{
+	if (argc < 2)
+		return (0);
+	if (ft_strcmp2(argv[1], "mandelbrot") == 0)
+		return (argc == 2);
+	else if (ft_strcmp2(argv[1], "julia") == 0)
+		return (argc == 2 || argc == 4);
+	else if (ft_strcmp2(argv[1], "alexis") == 0)
+		return (argc == 2);
+	return (0);
+}
+
 int	main(int argc, char **argv)
 {
 	t_data	data;
 
-	if ((argc != 2 && argc != 4) || (ft_strcmp2(argv[1], "mandelbrot") != 0
-			&& ft_strcmp2(argv[1], "julia") != 0 && ft_strcmp2(argv[1],
-				"alexis") != 0))
+	if (!validate_args(argc, argv))
 	{
-		ft_printf("Usage:\n");
-		ft_printf("  ./fractol mandelbrot\n");
-		ft_printf("  ./fractol julia <real> <imaginary>\n");
-		ft_printf("  ./fractol alexis\n");
+		print_usage();
 		return (1);
 	}
 	if (init_data(&data, argv))
+	{
+		ft_printf("Error: Invalid arguments for Julia set\n");
+		ft_printf("Real and imaginary parts must be valid floating point numbers\n");
+		print_usage();
 		return (1);
+	}
 	draw_fractal(&data);
 	mlx_put_image_to_window(data.mlx, data.win, data.img, 0, 0);
 	mlx_hook(data.win, 17, 0, exit_clean, &data);

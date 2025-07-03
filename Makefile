@@ -13,7 +13,8 @@ SRCS		= \
 	$(SRC_DIR)/hook.c \
 	$(SRC_DIR)/color.c \
 	$(SRC_DIR)/alexis.c \
-	$(SRC_DIR)/init_data.c
+	$(SRC_DIR)/init_data.c \
+	$(SRC_DIR)/utils.c
 
 OBJS		= $(SRCS:.c=.o)
 
